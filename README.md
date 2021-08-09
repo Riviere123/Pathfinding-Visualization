@@ -5,7 +5,7 @@ Command to install pygame: pip install pygame
 Run Main.py
 A grid of squares should apear.
 
-Controls:
+Controls: \n
 LMB: Place walls
 RMB: Delete walls
 Q: Place the start point

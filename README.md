@@ -10,6 +10,7 @@ LMB: Place walls
 RMB: Delete walls
 Q: Place the start point
 W: Place the end point
+SpaceBar: Toggles early break (if enabled the algorithm will break as soon as the path has been found.)
 
 Once you place the start and end node the grid should now show as a heatmap. The heatmap represents the score(if you're familiar with A*) of each node. The A* pathfinding alogrithm is a popular method for finding the shortest path from two points. If you look at the RZU-7 project you can see it also implemented in game form where the AI is capable of traversing its environment based on nodes and decision trees.
 

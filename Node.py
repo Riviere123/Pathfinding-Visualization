@@ -1,3 +1,4 @@
+#Node stores the values for each grid square
 class Node:
 	def __init__(self, posX, posY):
 		self.posX = posX

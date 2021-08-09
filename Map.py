@@ -2,8 +2,10 @@ from Node import Node
 grid = []
 width = 5
 height = 5
+earlyBreak = False #if True stops scoring nodes as soon as the target is found.
 
-def SetNeighbors(grid, diagonals):#asigning the nodes neighbors
+#Sets the nodes neighbors
+def SetNeighbors(grid, diagonals):
 	for node in grid:
 		for next_node in grid:
 			if node == next_node:
@@ -38,17 +40,19 @@ def SetNeighbors(grid, diagonals):#asigning the nodes neighbors
 						node.neighbors.append(next_node)
 						continue
 
-def CreateMap(width,height): #Generates the Nodes to fill all x and y values.
+#Generates the Nodes to fill all x and y values.
+def CreateMap(width,height): 
 	for x in range(0,width):
 		for y in range(0,height):
 			grid.append(Node(x,y))
 
-
-def ManhattenDistance(node,target): #returns the manhatten distance from node to target
+#returns the manhatten distance from node to target
+def ManhattenDistance(node,target): 
 	h = abs(node.posX - target.posX) + abs(node.posY - target.posY)
 	return h
 
-def FindPath():#Calls clear nodes then sets the map scores and parents accordingly.
+#Calls clear nodes then sets the map scores and parents accordingly.
+def FindPath():
 	ClearNodes()
 	Target = None
 	Start = None
@@ -69,6 +73,8 @@ def FindPath():#Calls clear nodes then sets the map scores and parents according
 				selected = node
 		openlist.remove(selected)
 		closedlist.append(selected)
+		if selected == Target and earlyBreak:
+			break
 		for neighbor in selected.neighbors: #Cycle through the current nodes neighbors
 			if neighbor in closedlist or neighbor.passable == False: #If it's in the closed list or is obstructed we continue onto next neighbor
 				continue
@@ -94,21 +100,25 @@ def FindPath():#Calls clear nodes then sets the map scores and parents according
 		print("No Path Found")
 		return False
 
-def MapSetup(x,y,diagonals): #calls create map and setneighbors method in order to get the map ready for use.
+#calls create map and setneighbors method in order to get the map ready for use.
+def MapSetup(x,y,diagonals): 
 	CreateMap(x,y)
 	SetNeighbors(grid,diagonals)
 
-def GetTargetNode(): #Returns the node that has the target value set to true.
+#Returns the node that has the target value set to true.
+def GetTargetNode(): 
 	for node in grid:
 		if node.target == True:
 			return node
 
-def GetStartNode(): #Returns the node that has the start value set to true.
+#Returns the node that has the start value set to true.
+def GetStartNode(): 
 	for node in grid:
 		if node.start == True:
 			return node
 
-def ClearNodes(): #Clears the nodes parent and scores
+#Clears the nodes parent and scores
+def ClearNodes(): 
 	for node in grid:
 		node.gScore = 0
 		node.hScore = 0

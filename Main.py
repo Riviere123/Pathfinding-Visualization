@@ -54,6 +54,7 @@ def draw_window():
     node_display()
     pygame.display.update()
 
+#Draws the path and nodes to the screen
 def node_display():
     count = 0
     for node in Map.grid:
@@ -90,13 +91,13 @@ def node_display():
                 pygame.draw.rect(screen,COLOR14,pygame.Rect(node.posX * nodeSize, node.posY * nodeSize, nodeSize, nodeSize))#Color for nodes                                
 
             pygame.draw.rect(screen,BLACK,pygame.Rect(node.posX * nodeSize, node.posY * nodeSize, nodeSize, nodeSize), 2)#Outline color
-        
         elif node.passable == False:
             pygame.draw.rect(screen,BLACK,pygame.Rect(node.posX * nodeSize, node.posY * nodeSize, nodeSize, nodeSize))#Color for Wall  
         if node.target == True:
             pygame.draw.rect(screen,GREY,pygame.Rect(node.posX * nodeSize, node.posY * nodeSize, nodeSize, nodeSize))#Color for Target
         if node.start == True:
             pygame.draw.rect(screen,GREY,pygame.Rect(node.posX * nodeSize, node.posY * nodeSize, nodeSize, nodeSize))#Color for Start
+
 
     currentNode = Map.GetTargetNode()
     startNode = Map.GetStartNode()
@@ -125,6 +126,7 @@ def main():
                 for node in Map.grid:
                     if node.posX == mouseX and node.posY == mouseY:
                         node.passable = False
+            if event.type == pygame.MOUSEBUTTONUP:
                 Map.FindPath()
             if pygame.mouse.get_pressed()[2]:
                 pos = pygame.mouse.get_pos()
@@ -134,7 +136,6 @@ def main():
                 for node in Map.grid:
                     if node.posX == mouseX and node.posY == mouseY:
                         node.passable = True
-                Map.FindPath()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_q: #Q key event
                     pos = pygame.mouse.get_pos()
@@ -154,6 +155,9 @@ def main():
                         if node.posX == mouseX and node.posY == mouseY and node.start == False:
                             node.target = True
                     Map.FindPath() 
+                if event.key == pygame.K_SPACE: #Space Key Event
+                    Map.earlyBreak = not Map.earlyBreak
+                    Map.FindPath()
         draw_window() #Method that is drawing the objects to the screen
     pygame.quit()
 
